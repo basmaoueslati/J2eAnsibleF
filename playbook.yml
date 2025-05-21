@@ -5,7 +5,8 @@
    vars:
     tomcat_home: /opt/tomcat
     app_war: webapp.war
-    app_src_path: '**/*.war'
+    app_src_path: '/var/lib/jenkins/workspace/J2EEAnsible1/webapp/target/webapp.war'
+
     app_dest_path: "{{ tomcat_home }}/webapps/{{ app_war }}"
     
    tasks:
