@@ -3,10 +3,10 @@ pipeline {
     tools {
            jdk 'jdk11'
     }
-    environment {
+    vars:
         INVENTORY = 'inventory.ini'
         PLAYBOOK = 'playbook.yml'
-    }
+    
     stages {
 
         stage('Build') {
