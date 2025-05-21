@@ -24,5 +24,5 @@ pipeline {
                 sh "ansible-playbook -i ${INVENTORY} ${PLAYBOOK}"
             }
         }
-}
+    }
 }
