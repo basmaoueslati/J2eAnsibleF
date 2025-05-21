@@ -20,7 +20,7 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook(
-                    playbook: 'playbookAns.yml',
+                    playbook: 'playbook.yml',
                     inventory: 'inventory.ini'
                 )
             }
