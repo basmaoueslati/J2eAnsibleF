@@ -32,7 +32,7 @@
         mode: '0644'
       notify: Restart Tomcat
 
-  handlers:
+ handlers:
     - name: Restart Tomcat
       systemd:
         name: tomcat
