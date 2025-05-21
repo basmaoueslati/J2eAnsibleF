@@ -1,16 +1,32 @@
 ---
-- name: Deploy application to Tomcat
+ - name: Deploy J2EE app to Tomcat
   hosts: tomcat
   become: yes
   vars:
-    app_war: '**/*.war'
-    tomcat_webapps: /opt/tomcat/webapps
-
+    tomcat_home: /opt/tomcat
+    app_war: webapp.war
+    app_src_path: '**/*.war'
+    app_dest_path: "{{ tomcat_home }}/webapps/{{ app_war }}"
+    
   tasks:
-    - name: Copy WAR to Tomcat
+    - name: Stop Tomcat
+      systemd:
+        name: tomcat
+        state: stopped
+      notify: Restart Tomcat
+      
+    - name: Remove old WAR and exploded directory
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ app_dest_path }}"
+        - "{{ app_dest_path | regex_replace('.war$', '') }}"
+        
+    - name: Copy new WAR to Tomcat
       copy:
-        src: "{{ app_war }}"
-        dest: "{{ tomcat_webapps }}/myapp.war"
+        src: "{{ app_src_path }}"
+        dest: "{{ app_dest_path }}"
         owner: tomcat
         group: tomcat
         mode: '0644'
@@ -20,4 +36,5 @@
     - name: Restart Tomcat
       systemd:
         name: tomcat
-        state: restarted
+        state: started
+        enabled: yes
