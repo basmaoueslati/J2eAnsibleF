@@ -23,7 +23,7 @@
       copy:
         src: "{{ app_src_path }}"
         dest: "{{ app_dest_path }}"
-        owner: tomcat
-        group: tomcat
+        owner: ubuntu
+        group: ubuntu
         mode: '0644'
 
