@@ -17,12 +17,11 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        
         stage('Run Ansible Playbook') {
             steps {
-                ansiblePlaybook(
-                    playbook: 'playbook.yml',
-                    inventory: 'inventory.ini'
-                )
+                withCredentials([sshUserPrivateKey(credentialsId: 'ansible_ssh_key', keyFileVariable: 'SSH_KEY')]) {
+                    sh "ansible-playbook -i inventory.ini playbook.yml --private-key=$SSH_KEY"
             }
         }
     }
