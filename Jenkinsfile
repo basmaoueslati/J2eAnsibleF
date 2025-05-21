@@ -3,9 +3,7 @@ pipeline {
     tools {
            jdk 'jdk11'
     }
-    vars:
-        INVENTORY : 'inventory.ini'
-        PLAYBOOK : 'playbook.yml'
+
     
     stages {
 
@@ -21,7 +19,7 @@ pipeline {
         }
         stage('Run Ansible Playbook') {
             steps {
-                sh "ansible-playbook -i {{INVENTORY}} {{PLAYBOOK}}
+                sh "ansible-playbook -i inventory.ini playbook.yml"
             }
         }
     }
