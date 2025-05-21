@@ -3,6 +3,10 @@ pipeline {
     tools {
            jdk 'jdk11'
     }
+    environment {
+        INVENTORY = 'inventory.ini'
+        PLAYBOOK = 'playbook.yml'
+    }
     stages {
 
         stage('Build') {
@@ -15,9 +19,10 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Deploy to Tomcat') {
+        stage('Run Ansible Playbook') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.38.26.11:8080/')], contextPath: null, war: '**/*.war'                            }
+                sh "ansible-playbook -i ${INVENTORY} ${PLAYBOOK}"
+            }
         }
-    }
+}
 }
