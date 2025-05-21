@@ -4,8 +4,8 @@ pipeline {
            jdk 'jdk11'
     }
     vars:
-        INVENTORY = 'inventory.ini'
-        PLAYBOOK = 'playbook.yml'
+        INVENTORY : 'inventory.ini'
+        PLAYBOOK : 'playbook.yml'
     
     stages {
 
