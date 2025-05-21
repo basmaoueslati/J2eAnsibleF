@@ -9,12 +9,7 @@
     app_dest_path: "{{ tomcat_home }}/webapps/{{ app_war }}"
     
    tasks:
-    - name: Stop Tomcat
-      systemd:
-        name: tomcat
-        state: stopped
-      notify: Restart Tomcat
-      
+     
     - name: Remove old WAR and exploded directory
       file:
         path: "{{ item }}"
