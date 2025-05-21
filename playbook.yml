@@ -1,0 +1,23 @@
+---
+- name: Deploy application to Tomcat
+  hosts: tomcat
+  become: yes
+  vars:
+    app_war: '**/*.war'
+    tomcat_webapps: /opt/tomcat/webapps
+
+  tasks:
+    - name: Copy WAR to Tomcat
+      copy:
+        src: "{{ app_war }}"
+        dest: "{{ tomcat_webapps }}/myapp.war"
+        owner: tomcat
+        group: tomcat
+        mode: '0644'
+      notify: Restart Tomcat
+
+  handlers:
+    - name: Restart Tomcat
+      systemd:
+        name: tomcat
+        state: restarted
